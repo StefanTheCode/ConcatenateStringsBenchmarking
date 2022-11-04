@@ -122,4 +122,19 @@ public class BenchmarkService
 
         return testString;
     }
+
+    [Benchmark]
+    public string UsingStringCreate()
+    {
+        var bufferSize = Length * testString.Length;
+        return string.Create(bufferSize, (testString, Length), static (buffer, state) =>
+        {
+            var testStringSpan = state.testString.AsSpan();
+            for (var i = 0; i < state.Length; i++)
+            {
+                var pos = i * state.testString.Length;
+                testStringSpan.CopyTo(buffer[pos..]);
+            }
+        });
+    }
 }
