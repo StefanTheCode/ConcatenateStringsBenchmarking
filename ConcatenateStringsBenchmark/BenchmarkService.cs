@@ -7,24 +7,20 @@ namespace ConcatenateStringsBenchmark;
 public class BenchmarkService
 {
     [Params(10, 100, 1000)]
-    public  int Length;
+    public int Length;
 
-    public  string testString = "Test";
+    public string testString = "Test";
 
-    public  string[] appendix;
-
-    public BenchmarkService()
-    {
-    }
+    public string[] appendix;
 
     [GlobalSetup]
     public void Setup()
     {
-        this.appendix = new string[this.Length];
+        appendix = new string[Length];
 
-        for (var i = 0; i < this.Length; i++)
+        for (var i = 0; i < Length; i++)
         {
-            this.appendix[i] = "Test";
+            appendix[i] = "Test";
         }
     }
 
@@ -33,7 +29,7 @@ public class BenchmarkService
     {
         testString = "Test";
 
-        for (int i = 0; i < Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             testString += appendix[i];
         }
@@ -46,7 +42,7 @@ public class BenchmarkService
     {
         testString = "Test";
 
-        for (int i = 0; i < Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             testString = string.Concat(testString, appendix[i]);
         }
@@ -80,7 +76,7 @@ public class BenchmarkService
     {
         testString = "Test";
 
-        for (int i = 0; i < Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             testString = string.Format("{0}{1}", testString, appendix[i]);
         }
@@ -92,9 +88,9 @@ public class BenchmarkService
     public string UsingStringBuilder()
     {
         testString = "Test";
-        StringBuilder builder = new StringBuilder(testString);
+        var builder = new StringBuilder(testString);
 
-        for (int i = 0; i < Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             builder.Append(appendix[i]);
         }
@@ -109,7 +105,7 @@ public class BenchmarkService
     {
         testString = "Test";
 
-        StringBuilder builder = new StringBuilder(testString);
+        var builder = new StringBuilder(testString);
 
         builder.AppendJoin(String.Empty, appendix);
 
